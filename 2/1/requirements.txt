@@ -1,0 +1,16 @@
+cachetools==5.0.0
+certifi==2020.6.20
+chardet==4.0.0
+google-auth==2.6.6
+httplib2==0.18.1
+idna==2.10
+mysql-connector==2.2.9
+mysql-connector-python==8.0.29
+oauthlib==3.2.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+PySimpleSOAP==1.16.2
+requests==2.25.1
+requests-oauthlib==1.3.1
+rsa==4.8
+websocket-client==1.3.2
