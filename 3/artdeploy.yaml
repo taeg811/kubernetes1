@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: artdeploy
+  name: artdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artdeploy
+  template:
+    metadata:
+      labels:
+        app: artdeploy
+    spec:
+      containers:
+      - name: art
+        image: art
+        imagePullPolicy: Never
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: artpod-secret
+              key: passw
+        - name: MYSQL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: artpod-secret
+              key: user
+
+        - name: MYSQL_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: artpod-conf
+              key: database
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: artpod-conf
+              key: namepod
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: pvo1
+          mountPath: /app/result
+      - name: nginx
+        image: nginx:1.18.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: pvo1
+          mountPath: /usr/share/nginx/html
+
+      volumes:
+      - name: pvo1
+        emptyDir: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: artdep
+  labels:
+    app: artdeploy
+spec:
+  selector:
+    app: artdeploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+
+
+
+
+
+
