@@ -1,0 +1,11 @@
+#activate ingress
+minikube addons enable ingress
+kubectl get po -n ingress-nginx
+
+kubectl apply -n tenz -f artingreshost.yaml
+curl -i minikube.uven.ru
+
+#выведет статью
+<!DOCTYPE html><html><head><title>Create a PersistentVolume</title></head><body><p>In this exercise, you create a hostPath PersistentVolume. 
+Kubernetes supports hostPath for development and testing on a single-node cluster. A hostPath PersistentVolume uses a file or directory on the Node 
+to emulate network-attached storage.</p></body>
